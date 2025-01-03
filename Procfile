@@ -1,2 +1,1 @@
-release: npm i && npm run build
-web: npm run start
+web: npm i && npm run build && npm run start
