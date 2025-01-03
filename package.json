@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": "20"
+    "node": "20",
+    "npm": "10"
   },
   "dependencies": {
     "react": "^19.0.0",
