@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sidebar"
 import {Switch} from "@/components/ui/switch";
 import {Label} from "@radix-ui/react-label";
+import {useSchemaComponentContext} from "@nocobase/client";
 
 // This is sample data.
 const data = {
@@ -38,13 +39,15 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { designable, setDesignable } = useSchemaComponentContext();
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <a href="/">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <GalleryVerticalEnd className="size-4" />
                 </div>
@@ -56,6 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -64,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuButton asChild>
                   <Label>
                     <span className="flex-1">Enable UI Customizations</span>
-                    <Switch/>
+                    <Switch checked={designable} onCheckedChange={setDesignable}/>
                   </Label>
                 </SidebarMenuButton>
               </SidebarMenuItem>
