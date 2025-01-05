@@ -35,7 +35,7 @@ import {
 } from "@nocobase/client";
 import PluginDataVisualization from '@nocobase/plugin-data-visualization/dist/client'
 import RootPage from "./root";
-import {observer, useField, useFieldSchema} from "@formily/react";
+import {useFieldSchema} from "@formily/react";
 import {SidebarPlugin} from "@/dynamic/sidebar/Sidebar.Plugin";
 
 import dataSourceMainCollections from './data/dataSourceMainCollections.json';
@@ -43,7 +43,6 @@ import dataSource2 from './data/dataSource2.json';
 import dataSourceMainData from './data/dataSourceMainData.json';
 import type {AxiosInstance, AxiosRequestConfig} from "axios";
 import MockAdapter from "axios-mock-adapter";
-import {Button} from "@/components/ui/button";
 import {PageInitializer} from "@/dynamic/page/Page.Initializer";
 
 const defaultApis = {
@@ -97,11 +96,10 @@ export const mockApi = (axiosInstance: AxiosInstance, apis: MockApis = {}, delay
     mock.onAny(key).reply(getProcessMockData(apis, key) as any);
   });
 
-  return (apis: MockApis = {}) => {
-    Object.keys(apis).forEach((key) => {
-      mock.onAny(key).reply(getProcessMockData(apis, key) as any);
-    });
-  };
+  mock.onAny().reply((config) => {
+    console.log(config);
+    return [200, {data: {result: 'ok'}}];
+  })
 };
 
 export interface MockAppOptions extends ApplicationOptions {
@@ -136,27 +134,6 @@ const Hello = () => {
   const schema = useFieldSchema();
   return <h1>Hello, world! {schema.name}</h1>;
 };
-const Editable = observer(
-  (props: any) => {
-    const filed = useField<any>();
-    if (filed.editable) {
-      return props.children;
-    }
-    return (
-      <div>
-        <Button
-          onClick={() => {
-            filed.editable = true;
-          }}
-        >
-          编辑
-        </Button>
-        <div>{props.children}</div>
-      </div>
-    );
-  },
-  {displayName: 'Editable'},
-);
 
 const app = new Application({
   disableAcl: true,
@@ -201,7 +178,6 @@ export const TableCollectionFieldInitializer = () => {
 app.addComponents({
   ShowFormData,
   FormItem,
-  Editable,
   Markdown,
   ActionInitializer,
   DataBlockInitializer: DataBlockInitializer as any,

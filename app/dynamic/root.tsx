@@ -42,6 +42,9 @@ export default function RootPage({children}: { children: React.ReactNode }) {
         <div className="flex flex-1 flex-col gap-4 p-6">
           <AntdSchemaComponentProvider>
             <SchemaComponent
+              onChange={(schema) => {
+                console.log(schema.toJSON());
+              }}
               schema={{
                 "type": "void",
                 "x-component": "Page",
