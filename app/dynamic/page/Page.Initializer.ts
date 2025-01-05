@@ -1,4 +1,4 @@
-import {Grid, gridRowColWrap, SchemaInitializer} from "@nocobase/client";
+import {gridRowColWrap, SchemaInitializer} from "@nocobase/client";
 
 export const PageInitializer = new SchemaInitializer({
   name: 'Page.Initializer',
@@ -34,51 +34,51 @@ export const PageInitializer = new SchemaInitializer({
             return { filterCollections };
           },
         },
-        // {
-        //   name: 'details',
-        //   title: 'Details',
-        //   Component: 'DetailsBlockInitializer',
-        // },
-        // {
-        //   name: 'list',
-        //   title: 'List',
-        //   Component: 'ListBlockInitializer',
-        // },
-        // {
-        //   name: 'gridCard',
-        //   title: 'Grid Card',
-        //   Component: 'GridCardBlockInitializer',
-        // },
+        {
+          name: 'details',
+          title: 'Details',
+          Component: 'DetailsBlockInitializer',
+        },
+        {
+          name: 'list',
+          title: 'List',
+          Component: 'ListBlockInitializer',
+        },
+        {
+          name: 'gridCard',
+          title: 'Grid Card',
+          Component: 'GridCardBlockInitializer',
+        },
       ],
     },
-    // {
-    //   name: 'filterBlocks',
-    //   title: 'Filter blocks',
-    //   type: 'itemGroup',
-    //   children: [
-    //     {
-    //       name: 'filterForm',
-    //       title: 'Form',
-    //       Component: 'FilterFormBlockInitializer',
-    //     },
-    //     {
-    //       name: 'filterCollapse',
-    //       title: 'Collapse',
-    //       Component: 'FilterCollapseBlockInitializer',
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: 'otherBlocks',
-    //   type: 'itemGroup',
-    //   title: 'Other blocks',
-    //   children: [
-    //     {
-    //       name: 'markdown',
-    //       title: 'Markdown',
-    //       Component: 'MarkdownBlockInitializer',
-    //     },
-    //   ],
-    // },
+    {
+      name: 'filterBlocks',
+      title: 'Filter blocks',
+      type: 'itemGroup',
+      children: [
+        {
+          name: 'filterForm',
+          title: 'Form',
+          Component: 'FilterFormBlockInitializer',
+        },
+        {
+          name: 'filterCollapse',
+          title: 'Collapse',
+          Component: 'FilterCollapseBlockInitializer',
+        },
+      ],
+    },
+    {
+      name: 'otherBlocks',
+      type: 'itemGroup',
+      title: 'Other blocks',
+      children: [
+        {
+          name: 'markdown',
+          title: 'Markdown',
+          Component: 'MarkdownBlockInitializer',
+        },
+      ],
+    },
   ],
 });

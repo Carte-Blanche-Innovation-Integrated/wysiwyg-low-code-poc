@@ -9,18 +9,31 @@ import {
   BlockSchemaToolbar,
   CardItem,
   CollectionPlugin,
+  createFormActionInitializers,
   DataBlockInitializer,
   FormBlockInitializer,
+  FormBlockProvider,
   FormItem,
+  formItemInitializers,
   Grid,
+  InitializerWithSwitch,
   LocalDataSource,
   Markdown,
   Plugin,
   SchemaSettingsPlugin,
   SchemaToolbar,
   ShowFormData,
-  TableBlockInitializer
+  TableActionColumnInitializer,
+  tableActionInitializers,
+  TableBlockInitializer,
+  TableBlockProvider,
+  tableColumnInitializers,
+  useSchemaInitializerItem,
+  useTableBlockDecoratorProps,
+  useTableBlockProps,
+  SchemaInitializerPlugin,
 } from "@nocobase/client";
+import PluginDataVisualization from '@nocobase/plugin-data-visualization/dist/client'
 import RootPage from "./root";
 import {observer, useField, useFieldSchema} from "@formily/react";
 import {SidebarPlugin} from "@/dynamic/sidebar/Sidebar.Plugin";
@@ -51,7 +64,10 @@ type MockApis = Record<URL, ResponseData>;
 
 function getProcessMockData(apis: Record<string, any>, key: string) {
   return (config: AxiosRequestConfig) => {
-    if (!apis[key]) return [404, {data: {message: 'mock data not found'}}];
+    console.log("key ------->", key);
+    if (!apis[key]) {
+      return [404, {data: {message: 'mock data not found'}}];
+    }
     if (config?.params?.pageSize || config?.params?.page) {
       const {data, meta} = apis[key];
 
@@ -80,6 +96,10 @@ export const mockApi = (axiosInstance: AxiosInstance, apis: MockApis = {}, delay
   Object.keys(apis).forEach((key) => {
     mock.onAny(key).reply(getProcessMockData(apis, key) as any);
   });
+
+  mock.onPost('*', (...args) => {
+    console.log(args);
+  })
 
   return (apis: MockApis = {}) => {
     Object.keys(apis).forEach((key) => {
@@ -143,12 +163,15 @@ const Editable = observer(
 );
 
 const app = new Application({
+  disableAcl: true,
   router: {
     type: "memory",
   },
   plugins: [
     RootPlugin,
-    SidebarPlugin
+    SidebarPlugin,
+    PluginDataVisualization as any,
+    SchemaInitializerPlugin,
   ],
 });
 
@@ -162,6 +185,22 @@ app.pluginManager.add(AntdSchemaComponentPlugin);
 app.pluginManager.add(SchemaSettingsPlugin);
 app.pluginManager.add(CollectionPlugin, {config: {enableRemoteDataSource: false}});
 
+function t(val ) {
+  return val;
+}
+app.addScopes({
+  useTableBlockProps,
+  useTableBlockDecoratorProps,
+  t,
+  // useCreateFormBlockDecoratorProps,
+})
+
+export const TableCollectionFieldInitializer = () => {
+  const schema = {};
+  const itemConfig = useSchemaInitializerItem();
+  return <InitializerWithSwitch {...itemConfig} schema={schema} item={itemConfig} type={'x-collection-field'}/>;
+};
+
 app.addComponents({
   ShowFormData,
   FormItem,
@@ -171,11 +210,18 @@ app.addComponents({
   DataBlockInitializer,
   TableBlockInitializer,
   FormBlockInitializer,
-  // DetailsBlockInitializer,
-  // ListBlockInitializer,
-  // GridCardBlockInitializer,
+  TableBlockProvider,
+  TableActionColumnInitializer,
+  TableCollectionFieldInitializer,
+  FormBlockProvider,
   BlockSchemaToolbar,
-  // MarkdownBlockInitializer,
 });
+
+app.schemaInitializerManager.add(
+  tableColumnInitializers,
+  tableActionInitializers,
+  createFormActionInitializers,
+  formItemInitializers,
+);
 
 export default app.getRootComponent();

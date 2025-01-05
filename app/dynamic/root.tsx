@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
-import {AntdSchemaComponentProvider, SchemaComponent} from "@nocobase/client";
+import {AntdSchemaComponentProvider, Grid, SchemaComponent} from "@nocobase/client";
 import * as React from "react";
 
 export default function RootPage({children}: { children: React.ReactNode }) {

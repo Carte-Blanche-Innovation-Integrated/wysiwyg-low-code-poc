@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar"
 import {Switch} from "@/components/ui/switch";
 import {Label} from "@radix-ui/react-label";
-import {Grid, SchemaComponent, useDesignable, useSchemaComponentContext} from "@nocobase/client";
+import {Grid, SchemaComponent, useSchemaComponentContext} from "@nocobase/client";
 
 // This is sample data.
 const data = {
