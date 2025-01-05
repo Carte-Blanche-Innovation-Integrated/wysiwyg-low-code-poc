@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar"
 import {Switch} from "@/components/ui/switch";
 import {Label} from "@radix-ui/react-label";
-import {useSchemaComponentContext} from "@nocobase/client";
+import {Grid, SchemaComponent, useDesignable, useSchemaComponentContext} from "@nocobase/client";
 
 // This is sample data.
 const data = {
@@ -39,7 +39,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { designable, setDesignable } = useSchemaComponentContext();
+  const {designable, setDesignable} = useSchemaComponentContext()
 
   return (
     <Sidebar {...props}>
@@ -99,6 +99,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
+
+          <SchemaComponent
+            schema={{
+              name: 'root',
+              type: 'void',
+              'x-component': 'Grid',
+              'x-decorator': 'Sidebar.Menu',
+              'x-initializer': 'Sidebar.Initializer',
+              properties: {
+                hello: Grid.wrap({
+                  type: 'void',
+                  title: "Getting Started",
+                  'x-toolbar': 'MyToolbar',
+                  'x-decorator': 'BlockItem',
+                  'x-component': 'Sidebar.Menu.Item',
+                }),
+                hello2: Grid.wrap({
+                  type: 'void',
+                  title: "Building you app",
+                  'x-decorator': 'BlockItem',
+                  'x-toolbar': 'MyToolbar',
+                  'x-component': 'Sidebar.Menu.Item',
+                }),
+              },
+            }}
+          />
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />

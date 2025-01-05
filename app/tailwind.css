@@ -86,3 +86,20 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.sidebar-content {
+  .nb-grid-warp .RowDivider {
+    margin-top: 0!important;
+  }
+  .nb-grid-warp .CardRow.showDivider {
+    margin: 0!important;
+  }
+
+  .nb-grid-row .nb-grid-col {
+    width: 100%!important;
+  }
+
+  .nb-col-divider, .nb-row-divider {
+    display: none;
+  }
+}
