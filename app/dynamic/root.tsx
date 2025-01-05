@@ -52,21 +52,18 @@ export default function RootPage({children}: { children: React.ReactNode }) {
                     "x-initializer": "Page.Initializer",
                     "properties": {
                       "jee9c4dbudf": {
-                        "_isJSONSchemaObject": true,
                         "version": "2.0",
                         "type": "void",
                         "x-component": "Grid.Row",
                         "x-app-version": "1.4.17",
                         "properties": {
                           "oyfmhmkidcl": {
-                            "_isJSONSchemaObject": true,
                             "version": "2.0",
                             "type": "void",
                             "x-component": "Grid.Col",
                             "x-app-version": "1.4.17",
                             "properties": {
                               "yn2k746khfa": {
-                                "_isJSONSchemaObject": true,
                                 "version": "2.0",
                                 "type": "void",
                                 "x-settings": "blockSettings:markdown",

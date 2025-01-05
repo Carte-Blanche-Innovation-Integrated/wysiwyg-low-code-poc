@@ -21,7 +21,7 @@ export const PageInitializer = new SchemaInitializer({
           title: 'Form',
           Component: 'FormBlockInitializer',
           useComponentProps: () => {
-            const filterCollections = ({ collection }) => {
+            const filterCollections = ({ collection }: {collection: any}) => {
               const { unavailableActions, availableActions } = collection?.options || {};
               if (availableActions) {
                 return availableActions.includes?.('create');

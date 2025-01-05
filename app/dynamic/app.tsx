@@ -20,6 +20,7 @@ import {
   LocalDataSource,
   Markdown,
   Plugin,
+  SchemaInitializerPlugin,
   SchemaSettingsPlugin,
   SchemaToolbar,
   ShowFormData,
@@ -31,7 +32,6 @@ import {
   useSchemaInitializerItem,
   useTableBlockDecoratorProps,
   useTableBlockProps,
-  SchemaInitializerPlugin,
 } from "@nocobase/client";
 import PluginDataVisualization from '@nocobase/plugin-data-visualization/dist/client'
 import RootPage from "./root";
@@ -96,10 +96,6 @@ export const mockApi = (axiosInstance: AxiosInstance, apis: MockApis = {}, delay
   Object.keys(apis).forEach((key) => {
     mock.onAny(key).reply(getProcessMockData(apis, key) as any);
   });
-
-  mock.onPost('*', (...args) => {
-    console.log(args);
-  })
 
   return (apis: MockApis = {}) => {
     Object.keys(apis).forEach((key) => {
@@ -185,9 +181,10 @@ app.pluginManager.add(AntdSchemaComponentPlugin);
 app.pluginManager.add(SchemaSettingsPlugin);
 app.pluginManager.add(CollectionPlugin, {config: {enableRemoteDataSource: false}});
 
-function t(val ) {
+function t(val: string) {
   return val;
 }
+
 app.addScopes({
   useTableBlockProps,
   useTableBlockDecoratorProps,
@@ -207,9 +204,9 @@ app.addComponents({
   Editable,
   Markdown,
   ActionInitializer,
-  DataBlockInitializer,
-  TableBlockInitializer,
-  FormBlockInitializer,
+  DataBlockInitializer: DataBlockInitializer as any,
+  TableBlockInitializer: TableBlockInitializer as any,
+  FormBlockInitializer: FormBlockInitializer as any,
   TableBlockProvider,
   TableActionColumnInitializer,
   TableCollectionFieldInitializer,
