@@ -85,6 +85,10 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  .tw ol,.tw ul,.tw menu {
+    margin: 0;
+  }
 }
 
 .sidebar-content {
@@ -102,4 +106,8 @@ body {
   .nb-col-divider, .nb-row-divider {
     display: none;
   }
+}
+
+.ant-app {
+  width: 100%;
 }
