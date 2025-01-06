@@ -11,13 +11,34 @@ function SidebarInitializerItem() {
   const itemConfig = useSchemaInitializerItem();
   const {insert} = useSchemaInitializer();
   const handleClick = () => {
-    insert({
-      type: 'void',
-      title: Math.random(),
-      'x-toolbar': 'MyToolbar',
-      'x-decorator': 'BlockItem',
-      'x-component': itemConfig['x-component'],
-    });
+    fetch(window.location.pathname, {
+      method: "POST",
+      body: JSON.stringify({
+        action: 'page:add',
+        payload: {
+          name: `Page ${Math.floor(Math.random() * 100)}`,
+          order: 10,
+          schema: {
+            "type": "void",
+            "x-component": "Page",
+            "properties": {
+              "grid": {
+                "type": "void",
+                "x-uid": "vt1dzpieu11",
+                "x-async": false,
+                "x-index": 1,
+                "x-component": "Grid",
+                "x-initializer": "Page.Initializer"
+              }
+            }
+          }
+        }
+      })
+    }).then((res) => {
+        window.location.reload();
+      })
+
+
   };
   return <SchemaInitializerItem title={itemConfig.title} onClick={handleClick}/>;
 }
@@ -27,13 +48,13 @@ export const SidebarInitializer = new SchemaInitializer({
   title: 'Add Item',
   wrap: Grid.wrap,
   items: [
-    {
-      name: 'Menu Group',
-      title: "Menu Group",
-      type: 'submenu.item',
-      'x-component': 'Sidebar.SubMenu',
-      Component: SidebarInitializerItem,
-    },
+    // {
+    //   name: 'Menu Group',
+    //   title: "Menu Group",
+    //   type: 'submenu.item',
+    //   'x-component': 'Sidebar.SubMenu',
+    //   Component: SidebarInitializerItem,
+    // },
     {
       name: 'Menu Item',
       title: 'Menu Item',

@@ -114,6 +114,7 @@ const MyToolbar = () => {
 
 class RootPlugin extends Plugin {
   async load() {
+    console.log(this.app);
     this.app.addComponents({
       MyToolbar,
       Grid,

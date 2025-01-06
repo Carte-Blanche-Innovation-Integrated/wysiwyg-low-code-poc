@@ -23,10 +23,9 @@ export const action = async ({request}: ActionFunctionArgs) => {
   const data = await request.json();
   const pageId = getPageId({request});
 
-    console.log(data);
   if (data.action === 'page-schema:change' && pageId) {
     await prisma.page.update({
-      where:{
+      where: {
         id: pageId,
       },
       data: {
@@ -34,6 +33,13 @@ export const action = async ({request}: ActionFunctionArgs) => {
       }
     });
     return {result: 'ok'};
+  }
+
+  if (data.action === 'page:add') {
+    const Page = await prisma.page.create({
+      data: data.payload,
+    });
+    return {result: 'ok', Page};
   }
 }
 
