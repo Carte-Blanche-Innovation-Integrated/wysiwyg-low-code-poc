@@ -12,7 +12,7 @@ export function SidebarMenuItemWrapper() {
 
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild>
+      <SidebarMenuButton isActive={`/${(schema as any).id}` === window.location.pathname} asChild>
         <a href={`/${(schema as any).id}`}>
           <span>{schema.title}</span>
         </a>
