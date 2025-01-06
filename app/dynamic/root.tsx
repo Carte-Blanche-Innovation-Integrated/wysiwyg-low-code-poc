@@ -9,7 +9,7 @@ import {useAtom} from "jotai";
 import {pageData$} from "@/dynamic/page/store";
 
 export default function RootPage({children}: { children: React.ReactNode }) {
-  const [pageData] = useAtom(pageData$);
+  const [pageData, setPageData] = useAtom(pageData$);
 
   return (
     <SidebarProvider>
@@ -22,7 +22,18 @@ export default function RootPage({children}: { children: React.ReactNode }) {
             <AntdSchemaComponentProvider>
               <SchemaComponent
                 onChange={(schema) => {
-                  console.log(schema.toJSON());
+                  const oldSchema = schema.toJSON();
+
+                  fetch(window.location.pathname, {
+                    method: 'post',
+                    body: JSON.stringify({
+                      action: 'page-schema:change',
+                      schema: schema.toJSON()
+                    }) as any,
+                  })
+                    .catch(() => {
+                      setPageData((p) => ({...p, schema: oldSchema}) as any);
+                    })
                 }}
                 schema={pageData.schema as any}
               />

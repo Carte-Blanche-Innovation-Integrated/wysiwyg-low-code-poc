@@ -111,3 +111,7 @@ body {
 .ant-app {
   width: 100%;
 }
+
+.ant-card {
+  @apply !border;
+}
