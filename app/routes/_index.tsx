@@ -1,19 +1,5 @@
-import App from './app.client';
-import {SidebarProvider} from "@/components/ui/sidebar";
-import {useEffect, useState} from "react";
+import App, {loader as rootLoader} from './$';
 
-export default function () {
-  const [loaded, setLoaded] = useState(false);
+export const loader = rootLoader;
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
-
-  if (App && loaded) return (
-    <SidebarProvider>
-      <App/>
-    </SidebarProvider>
-  );
-
-  return null;
-}
+export default App;

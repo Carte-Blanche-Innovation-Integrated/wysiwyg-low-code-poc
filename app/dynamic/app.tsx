@@ -33,7 +33,7 @@ import {
   useTableBlockDecoratorProps,
   useTableBlockProps,
 } from "@nocobase/client";
-import PluginDataVisualization from '@nocobase/plugin-data-visualization/dist/client'
+// import PluginDataVisualization from '@nocobase/plugin-data-visualization/dist/client'
 import RootPage from "./root";
 import {useFieldSchema} from "@formily/react";
 import {SidebarPlugin} from "@/dynamic/sidebar/Sidebar.Plugin";
@@ -143,7 +143,7 @@ const app = new Application({
   plugins: [
     RootPlugin,
     SidebarPlugin,
-    PluginDataVisualization as any,
+    // PluginDataVisualization as any,
     SchemaInitializerPlugin,
   ],
 });

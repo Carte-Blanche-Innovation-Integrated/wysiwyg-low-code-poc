@@ -7,25 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model MenuGroup {
-  id        String     @id @default(uuid())
-  name      String
-  order     Int
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  menuItems MenuItem[]
-
-  @@map("menu_groups")
-}
-
-model MenuItem {
+model Page {
   id          String     @id @default(uuid())
   name        String
   order       Int
-  menuGroupId String?    @map("menu_group_id")
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
-  menuGroup   MenuGroup? @relation(fields: [menuGroupId], references: [id])
 
-  @@map("menu_items")
+  schema      Json
+
+  @@map("pages")
 }

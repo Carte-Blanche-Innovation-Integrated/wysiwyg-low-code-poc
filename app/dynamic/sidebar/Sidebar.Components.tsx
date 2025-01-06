@@ -12,8 +12,10 @@ export function SidebarMenuItemWrapper() {
 
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton>
-        <span>{schema.title}</span>
+      <SidebarMenuButton asChild>
+        <a href={`/${(schema as any).id}`}>
+          <span>{schema.title}</span>
+        </a>
       </SidebarMenuButton>
     </SidebarMenuItem>
   )

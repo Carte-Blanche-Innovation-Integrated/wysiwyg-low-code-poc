@@ -16,30 +16,13 @@ import {
 } from "@/components/ui/sidebar"
 import {Switch} from "@/components/ui/switch";
 import {Label} from "@radix-ui/react-label";
-import {Grid, SchemaComponent, useSchemaComponentContext} from "@nocobase/client";
-
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Getting Started",
-      url: "#",
-      items: [
-        {
-          title: "Installation",
-          url: "#",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-        },
-      ],
-    },
-  ],
-}
+import {SchemaComponent, useSchemaComponentContext} from "@nocobase/client";
+import {sidebarSchema$} from "@/dynamic/sidebar/store";
+import {useAtom} from "jotai";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {designable, setDesignable} = useSchemaComponentContext()
+  const {designable, setDesignable} = useSchemaComponentContext();
+  const [sidebarSchema] = useAtom(sidebarSchema$)
 
   return (
     <Sidebar {...props}>
@@ -77,54 +60,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarMenu>
-            {data.navMain.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
-                    {item.title}
-                  </a>
-                </SidebarMenuButton>
-                {item.items?.length ? (
-                  <SidebarMenuSub>
-                    {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild>
-                          <a href={item.url}>{item.title}</a>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                ) : null}
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-
-          <SchemaComponent
-            schema={{
-              name: 'root',
-              type: 'void',
-              'x-component': 'Grid',
-              'x-decorator': 'Sidebar.Menu',
-              'x-initializer': 'Sidebar.Initializer',
-              properties: {
-                hello: Grid.wrap({
-                  type: 'void',
-                  title: "Getting Started",
-                  'x-toolbar': 'MyToolbar',
-                  'x-decorator': 'BlockItem',
-                  'x-component': 'Sidebar.Menu.Item',
-                }),
-                hello2: Grid.wrap({
-                  type: 'void',
-                  title: "Building you app",
-                  'x-decorator': 'BlockItem',
-                  'x-toolbar': 'MyToolbar',
-                  'x-component': 'Sidebar.Menu.Item',
-                }),
-              },
-            }}
-          />
+          <SchemaComponent schema={sidebarSchema} />
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
